@@ -14,7 +14,7 @@ namespace _1700_Methods_HUD
         static string firstName;
         static string lastName;
         static string fullName;
-        static int enemyKill;
+        static float enemyKill;
         static int healHealth;
         static int healShields;
         static float Banana;
@@ -51,7 +51,8 @@ namespace _1700_Methods_HUD
 
         static void AddScore(int Score)
         {
-            Score = Score + enemyKill;
+            
+            Score =(int) (Score + enemyKill);
         }
 
       
@@ -68,7 +69,7 @@ namespace _1700_Methods_HUD
                 Banana = 0.75f;
                 healShields = 50;
                 healHealth = 25;
-                enemyKill = 50;
+                enemyKill = 50.0f;
                 firstName = "Monkey";
                 lastName = "Lad";
                 fullName = firstName + " " + lastName;
