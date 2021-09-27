@@ -24,12 +24,34 @@ namespace _1700_Methods_HUD
 
 
 
-        static void Showhud()
+        static void ShowHUD()
         {
             Console.WriteLine("Banana Brain Studios Presents: ");
             Console.WriteLine("Monkey Business");
             Console.WriteLine("Score: " + Score);
+            Console.WriteLine("Health: " + Health);
+            Console.WriteLine("Shields: " + Shields);
+            Console.WriteLine("Lives: " + Lives);
+            Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
 
+        }
+
+        static void AddBanana()
+        {
+            ScoreMultiplier = ScoreMultiplier + Banana;
+        }
+
+        static void Die()
+        {
+            Shields = baseShields;
+            Health = baseHealth;
+            Lives = Lives - 1;
+
+        }
+
+        static void AddScore(int Score)
+        {
+            Score = Score + enemyKill;
         }
 
       
@@ -58,13 +80,7 @@ namespace _1700_Methods_HUD
                 Health = 100;
                 Score = 0.0f;
 
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+                ShowHUD();
 
                 Console.ReadKey(true);
 
@@ -82,13 +98,7 @@ namespace _1700_Methods_HUD
                 Score = (Score + enemyKill + enemyKill * ScoreMultiplier);
                 Shields = Shields - Bodyshot;
 
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+                ShowHUD();
 
                 Console.ReadKey(true);
 
@@ -97,18 +107,11 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                ScoreMultiplier = ScoreMultiplier + Banana;
+                AddBanana();
                 Score = (Score + enemyKill * ScoreMultiplier);
                 Shields = Shields - Headshot - Headshot;
 
-
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+                ShowHUD();
 
                 Console.ReadKey(true);
 
@@ -117,17 +120,10 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                Lives = Lives - 1;
-                Shields = baseShields;
-                Health = baseHealth;
+                Die();
 
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+
+                ShowHUD();
 
                 Console.ReadKey(true);
 
@@ -136,20 +132,12 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                ScoreMultiplier = ScoreMultiplier + Banana;
-                Score = Score + enemyKill;
-                Score = Score + enemyKill;
-                Score = Score + enemyKill;
+                AddBanana();
+                AddScore(3);
                 Score = Score * ScoreMultiplier;
                 Shields = Shields - Headshot;
 
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+                ShowHUD();
 
                 Console.ReadKey(true);
 
@@ -163,13 +151,7 @@ namespace _1700_Methods_HUD
                 Shields = Shields - Headshot;
                 Health = Health - Bodyshot;
 
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+                ShowHUD();
 
                 Console.ReadKey(true);
 
@@ -179,16 +161,10 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("--------------");
 
                 Health = Health + healHealth;
-                ScoreMultiplier = ScoreMultiplier + Banana;
-                Score = Score * ScoreMultiplier;
+                AddBanana();
+                
 
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+                ShowHUD();
 
                 Console.ReadKey(true);
 
@@ -199,15 +175,9 @@ namespace _1700_Methods_HUD
 
                 Shields = Shields + healShields;
                 Score = Score + enemyKill;
-                Score = Score * ScoreMultiplier;
+                
 
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+                ShowHUD();
 
                 Console.ReadKey(true);
 
@@ -216,19 +186,13 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                ScoreMultiplier = ScoreMultiplier + Banana;
-                ScoreMultiplier = ScoreMultiplier + Banana;
+                AddBanana();
+                AddBanana();
                 Score = Score + enemyKill;
                 Score = Score + enemyKill;
                 Score = Score + enemyKill;
 
-                Console.WriteLine("Banana Brain Studios Presents:");
-                Console.WriteLine("Monkey Business");
-                Console.WriteLine("Score: " + Score);
-                Console.WriteLine("Health: " + Health);
-                Console.WriteLine("Shields: " + Shields);
-                Console.WriteLine("Lives: " + Lives);
-                Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+                ShowHUD();
 
                 Console.ReadKey(true);
 
