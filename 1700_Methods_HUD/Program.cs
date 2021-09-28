@@ -6,7 +6,6 @@ namespace _1700_Methods_HUD
     {
         static float Score;
         static int Health;
-        static int Shields;
         static int Lives;
         static float ScoreMultiplier;
         static int Headshot;
@@ -16,10 +15,9 @@ namespace _1700_Methods_HUD
         static string fullName;
         static float enemyKill;
         static int healHealth;
-        static int healShields;
         static float Banana;
         static int baseHealth;
-        static int baseShields;
+        static int Damage;
 
 
 
@@ -30,7 +28,6 @@ namespace _1700_Methods_HUD
             Console.WriteLine("Monkey Business");
             Console.WriteLine("Score: " + Score);
             Console.WriteLine("Health: " + Health);
-            Console.WriteLine("Shields: " + Shields);
             Console.WriteLine("Lives: " + Lives);
             Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
 
@@ -43,7 +40,6 @@ namespace _1700_Methods_HUD
 
         static void Die()
         {
-            Shields = baseShields;
             Health = baseHealth;
             Lives = Lives - 1;
 
@@ -51,24 +47,58 @@ namespace _1700_Methods_HUD
 
         static void AddScore()
         {
-            enemyKill = enemyKill * ScoreMultiplier;
+
             Score = Score + enemyKill;
       
         }
+
+        static void calcDamage()
+        {
+            Random rnd = new Random();
+
+            for(int j = 0; j < 1; j++)
+            {
+                
+                Damage = (rnd.Next(10, 30));
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Damage Taken: " + Damage);
+                Console.ResetColor();
+                
+            }
+            
+        }
+
+        static void takeDamage()
+        {
+            calcDamage();
+            Health = Health - Damage;
+            if(Health <= 0)
+            {
+                Die();
+            }
+        }
+
+        static void heal()
+        {
+            Health = Health + healHealth;
+        }
+
+
+
+
 
       
 
         static void Main(string[] args)
         {
             {
+
                 
                 
                
                 
-                baseShields = 150;
-                baseHealth = 100;
+                baseHealth = 150;
                 Banana = 0.75f;
-                healShields = 50;
                 healHealth = 25;
                 enemyKill = 50.0f;
                 firstName = "Monkey";
@@ -78,8 +108,7 @@ namespace _1700_Methods_HUD
                 Bodyshot = 25;
                 ScoreMultiplier = 1.0f;
                 Lives = 5;
-                Shields = 150;
-                Health = 100;
+                Health = 150;
                 Score = 0.0f;
 
                 ShowHUD();
@@ -97,9 +126,9 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
+                takeDamage();
                 AddScore();
                 AddScore();
-                Shields = Shields - Bodyshot;
 
                 ShowHUD();
 
@@ -111,19 +140,23 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("--------------");
 
                 AddBanana();
-                Score = (Score + enemyKill * ScoreMultiplier);
-                Shields = Shields - Headshot - Headshot;
+                AddScore();
+                takeDamage();
+                takeDamage();
+                Score = Score * ScoreMultiplier;
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
                 Console.WriteLine(" ");
-                Console.WriteLine("You take one shot to the body and two shots to the head and die, losing a life");
+                Console.WriteLine("You take one shot to the body and two shots to the head");
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                Die();
+                takeDamage();
+                takeDamage();
+                takeDamage();
 
 
                 ShowHUD();
@@ -140,7 +173,6 @@ namespace _1700_Methods_HUD
                 AddScore();
                 AddScore();
                 Score = Score * ScoreMultiplier;
-                Shields = Shields - Headshot;
 
                 ShowHUD();
 
@@ -151,10 +183,10 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                Score = Score + enemyKill;
-                Shields = Shields - Headshot;
-                Shields = Shields - Headshot;
-                Health = Health - Bodyshot;
+                AddScore();
+                takeDamage();
+                takeDamage();
+                takeDamage();
 
                 ShowHUD();
 
@@ -165,7 +197,7 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                Health = Health + healHealth;
+                heal();
                 AddBanana();
                 
 
@@ -178,8 +210,7 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                Shields = Shields + healShields;
-                Score = Score + enemyKill;
+                AddScore();
                 
 
                 ShowHUD();
@@ -193,9 +224,9 @@ namespace _1700_Methods_HUD
 
                 AddBanana();
                 AddBanana();
-                Score = Score + enemyKill;
-                Score = Score + enemyKill;
-                Score = Score + enemyKill;
+                AddScore();
+                AddScore();
+                AddScore();
 
                 ShowHUD();
 
