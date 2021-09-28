@@ -16,18 +16,22 @@ namespace _1700_Methods_HUD
         static float Banana;
         static int baseHealth;
         static int damage;
+        static float enemieskilled;
+        static float pointgain;
 
 
 
 
         static void ShowHUD()
         {
+            Console.WriteLine("==============");
             Console.WriteLine("Banana Brain Studios Presents: ");
             Console.WriteLine("Monkey Business");
             Console.WriteLine("Score: " + Score);
             Console.WriteLine("Health: " + Health);
             Console.WriteLine("Lives: " + Lives);
             Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+            Console.WriteLine("==============");
 
         }
 
@@ -43,10 +47,10 @@ namespace _1700_Methods_HUD
 
         }
 
-        static void AddScore()
+        static void AddScore(float enemyKillValue)
         {
 
-            Score = Score + enemyKillValue;
+            Score = Score + pointgain;
       
         }
 
@@ -57,16 +61,18 @@ namespace _1700_Methods_HUD
             for(int j = 0; j < 1; j++)
             {
                 damage = (rnd.Next(10, 30));
+                Console.WriteLine("==============");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Damage Taken: " + damage);
                 Console.ResetColor();
+                Console.WriteLine("==============");
             }
             
         }
 
-        static void TakeDamage()
+        static void TakeDamage(int damage)
         {
-            calcDamage();
+            
             Health = Health - damage;
             if(Health <= 0)
             {
@@ -77,6 +83,27 @@ namespace _1700_Methods_HUD
         static void heal()
         {
             Health = Health + healHealth;
+        }
+
+        
+        
+        
+        static void Pointsgained()
+        {
+            Random rnd = new Random();
+
+            for (int j = 0; j < 1; j++)
+            {
+                enemieskilled = (rnd.Next(1, 3));
+                pointgain = (enemieskilled * 50f) * ScoreMultiplier;
+            }
+
+            Console.WriteLine("==============");
+            Console.WriteLine("Enemies Killed: " + enemieskilled);
+            Console.WriteLine("Points Gained: " + (enemieskilled * 50f) * ScoreMultiplier);
+            Console.WriteLine("==============");
+
+
         }
 
 
@@ -106,92 +133,100 @@ namespace _1700_Methods_HUD
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
                 Console.WriteLine("Go get your bananas back from the aliens " + fullName);
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
-                Console.WriteLine("You kill two aliens and take one hit to the chest");
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
+                Console.WriteLine("You take one hit to the chest");
                 Console.WriteLine("--------------");
 
 
+                // damage = ???
                 //TakeDamage(damage);
-                TakeDamage();
+                Pointsgained();
+                calcDamage();
+                TakeDamage(damage);
+                AddScore(pointgain);
 
                 // pointsGained = ???
                 // scoreMultiplier = ???
                 // AddScore(pointsGained, scoreMultiplier);
-                AddScore();
-                AddScore();
+
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
-                Console.WriteLine("You kill one alien and you take two hits to the head, you also find one of your bananas");
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
+                Console.WriteLine("You take two hits to the head, you also find one of your bananas");
                 Console.WriteLine("--------------");
 
                 AddBanana();
-                AddScore();
-                TakeDamage();
-                TakeDamage();
-                Score = Score * ScoreMultiplier; // incorrect (only apply to incoming points)
+                calcDamage();
+                TakeDamage(damage);
+                calcDamage();
+                TakeDamage(damage);
+                Pointsgained();
+                AddScore(pointgain);
+                 // incorrect (only apply to incoming points)
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
                 Console.WriteLine("You take one shot to the body and two shots to the head");
-                Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                TakeDamage();
-                TakeDamage();
-                TakeDamage();
+                calcDamage();
+                TakeDamage(damage);
+                calcDamage();
+                TakeDamage(damage);
+                calcDamage();
+                TakeDamage(damage);
+                Pointsgained();
+                AddScore(pointgain);
 
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
-                Console.WriteLine("You kill three enemies and you find another banana taking one shot to the head in the process");
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
+                Console.WriteLine("You find another banana, taking one shot to the head in the process");
                 Console.WriteLine("--------------");
 
                 AddBanana();
-                AddScore();
-                AddScore();
-                AddScore();
-                Score = Score * ScoreMultiplier;
+                calcDamage();
+                TakeDamage(damage);
+
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
-                Console.WriteLine("You kill one enemy and take two shots to the head and one to the body");
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
+                Console.WriteLine("You take two shots to the head and one to the body");
                 Console.WriteLine("--------------");
 
-                AddScore();
-                TakeDamage();
-                TakeDamage();
-                TakeDamage();
+                Pointsgained();
+                calcDamage();
+                TakeDamage(damage);
+                calcDamage();
+                TakeDamage(damage);
+                calcDamage();
+                TakeDamage(damage);
+                AddScore(pointgain);
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
                 Console.WriteLine("You find a monkey biscuit that heals some of your health and find another banana");
-                Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
                 heal();
@@ -202,37 +237,39 @@ namespace _1700_Methods_HUD
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
-                Console.WriteLine("You find a Monkey shield that repairs some of your shields and kill one enemy");
-                Console.WriteLine(" ");
                 Console.WriteLine("--------------");
-
-                AddScore();
+                Console.WriteLine("You take two shots");
+                Console.WriteLine("--------------");
+                
+                calcDamage();
+                TakeDamage(damage);
+                calcDamage();
+                TakeDamage(damage);
+                Pointsgained();
+                AddScore(pointgain);
                 
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
-                Console.WriteLine("You find your last 2 Bananas and kill three enemies guarding them");
-                Console.WriteLine(" ");
+                Console.WriteLine("--------------");
+                Console.WriteLine("You find your last 2 Bananas");
                 Console.WriteLine("--------------");
 
                 AddBanana();
                 AddBanana();
-                AddScore();
-                AddScore();
-                AddScore();
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
-                Console.WriteLine(" ");
+                Console.WriteLine("----------------------------");
+                Console.WriteLine("----------------------------");
                 Console.WriteLine("YOU WIN");
                 Console.WriteLine("ENJOY YOUR BANANAS");
-                Console.WriteLine(" ");
+                Console.WriteLine("----------------------------");
+                Console.WriteLine("----------------------------");
 
                 Console.ReadKey(true);
             }
