@@ -49,10 +49,11 @@ namespace _1700_Methods_HUD
 
         }
 
-        static void AddScore(int Score)
+        static void AddScore()
         {
-            
-            Score =(int) (Score + enemyKill);
+            enemyKill = enemyKill * ScoreMultiplier;
+            Score = Score + enemyKill;
+      
         }
 
       
@@ -96,7 +97,8 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                Score = (Score + enemyKill + enemyKill * ScoreMultiplier);
+                AddScore();
+                AddScore();
                 Shields = Shields - Bodyshot;
 
                 ShowHUD();
@@ -134,7 +136,9 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("--------------");
 
                 AddBanana();
-                AddScore(3);
+                AddScore();
+                AddScore();
+                AddScore();
                 Score = Score * ScoreMultiplier;
                 Shields = Shields - Headshot;
 
