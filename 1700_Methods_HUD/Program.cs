@@ -8,8 +8,6 @@ namespace _1700_Methods_HUD
         static int Health;
         static int Lives;
         static float ScoreMultiplier;
-        static int Headshot;
-        static int Bodyshot;
         static string firstName;
         static string lastName;
         static string fullName;
@@ -84,9 +82,6 @@ namespace _1700_Methods_HUD
         }
 
 
-
-
-
       
 
         static void Main(string[] args)
@@ -104,8 +99,6 @@ namespace _1700_Methods_HUD
                 firstName = "Monkey";
                 lastName = "Lad";
                 fullName = firstName + " " + lastName;
-                Headshot = 50;
-                Bodyshot = 25;
                 ScoreMultiplier = 1.0f;
                 Lives = 5;
                 Health = 150;
