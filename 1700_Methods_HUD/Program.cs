@@ -11,11 +11,11 @@ namespace _1700_Methods_HUD
         static string firstName;
         static string lastName;
         static string fullName;
-        static float enemyKill;
+        static float enemyKillValue;
         static int healHealth;
         static float Banana;
         static int baseHealth;
-        static int Damage;
+        static int damage;
 
 
 
@@ -46,7 +46,7 @@ namespace _1700_Methods_HUD
         static void AddScore()
         {
 
-            Score = Score + enemyKill;
+            Score = Score + enemyKillValue;
       
         }
 
@@ -56,20 +56,18 @@ namespace _1700_Methods_HUD
 
             for(int j = 0; j < 1; j++)
             {
-                
-                Damage = (rnd.Next(10, 30));
+                damage = (rnd.Next(10, 30));
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Damage Taken: " + Damage);
+                Console.WriteLine("Damage Taken: " + damage);
                 Console.ResetColor();
-                
             }
             
         }
 
-        static void takeDamage()
+        static void TakeDamage()
         {
             calcDamage();
-            Health = Health - Damage;
+            Health = Health - damage;
             if(Health <= 0)
             {
                 Die();
@@ -95,7 +93,7 @@ namespace _1700_Methods_HUD
                 baseHealth = 150;
                 Banana = 0.75f;
                 healHealth = 25;
-                enemyKill = 50.0f;
+                enemyKillValue = 50.0f;
                 firstName = "Monkey";
                 lastName = "Lad";
                 fullName = firstName + " " + lastName;
@@ -119,7 +117,13 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                takeDamage();
+
+                //TakeDamage(damage);
+                TakeDamage();
+
+                // pointsGained = ???
+                // scoreMultiplier = ???
+                // AddScore(pointsGained, scoreMultiplier);
                 AddScore();
                 AddScore();
 
@@ -134,9 +138,9 @@ namespace _1700_Methods_HUD
 
                 AddBanana();
                 AddScore();
-                takeDamage();
-                takeDamage();
-                Score = Score * ScoreMultiplier;
+                TakeDamage();
+                TakeDamage();
+                Score = Score * ScoreMultiplier; // incorrect (only apply to incoming points)
 
                 ShowHUD();
 
@@ -147,9 +151,9 @@ namespace _1700_Methods_HUD
                 Console.WriteLine(" ");
                 Console.WriteLine("--------------");
 
-                takeDamage();
-                takeDamage();
-                takeDamage();
+                TakeDamage();
+                TakeDamage();
+                TakeDamage();
 
 
                 ShowHUD();
@@ -177,9 +181,9 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("--------------");
 
                 AddScore();
-                takeDamage();
-                takeDamage();
-                takeDamage();
+                TakeDamage();
+                TakeDamage();
+                TakeDamage();
 
                 ShowHUD();
 
