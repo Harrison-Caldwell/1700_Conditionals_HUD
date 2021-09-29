@@ -80,7 +80,7 @@ namespace _1700_Methods_HUD
             }
         }
 
-        static void heal()
+        static void heal(int healHealth)
         {
             Health = Health + healHealth;
         }
@@ -95,7 +95,7 @@ namespace _1700_Methods_HUD
             for (int j = 0; j < 1; j++)
             {
                 enemieskilled = (rnd.Next(1, 3));
-                pointgain = (enemieskilled * 50f) * ScoreMultiplier;
+                pointgain = (enemieskilled * enemyKillValue) * ScoreMultiplier;
             }
 
             Console.WriteLine("==============");
@@ -229,7 +229,7 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You find a monkey biscuit that heals some of your health and find another banana");
                 Console.WriteLine("--------------");
 
-                heal();
+                heal(healHealth);
                 AddBanana();
                 
 
