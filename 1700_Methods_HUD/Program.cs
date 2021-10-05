@@ -117,12 +117,18 @@ namespace _1700_Methods_HUD
 
         }
 
-        static void ChangeWeapon()
+        static void SelectWeapon()
         {
             Random rnd = new Random();
             {
                 Weapon = (rnd.Next(0, 6));
             }
+        }
+
+        static void ChangeWeapon(int Weapon)
+        {
+            SelectWeapon();
+
             if (Weapon == 0)
             {
                 EquippedWeapon = "FlingingPoo";
@@ -200,7 +206,7 @@ namespace _1700_Methods_HUD
                 Health = 150;
                 Score = 0.0f;
 
-                ChangeWeapon();
+                ChangeWeapon(5);
                 ShowHUD();
 
                 Console.ReadKey(true);
@@ -240,7 +246,7 @@ namespace _1700_Methods_HUD
                 TakeDamage(damage);
                 Pointsgained();
                 AddScore(pointgain);
-                ChangeWeapon();
+                ChangeWeapon(Weapon);
 
                 ShowHUD();
 
@@ -271,7 +277,7 @@ namespace _1700_Methods_HUD
                 AddBanana();
                 calcDamage();
                 TakeDamage(damage);
-                ChangeWeapon();
+                ChangeWeapon(Weapon);
 
 
                 ShowHUD();
@@ -301,7 +307,7 @@ namespace _1700_Methods_HUD
 
                 heal(healHealth);
                 AddBanana();
-                ChangeWeapon();
+                ChangeWeapon(Weapon);
                 
 
                 ShowHUD();
@@ -318,7 +324,7 @@ namespace _1700_Methods_HUD
                 TakeDamage(damage);
                 Pointsgained();
                 AddScore(pointgain);
-                ChangeWeapon();
+                ChangeWeapon(Weapon);
                 
 
                 ShowHUD();
