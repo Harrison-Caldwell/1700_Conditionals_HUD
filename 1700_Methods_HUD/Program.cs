@@ -18,19 +18,25 @@ namespace _1700_Methods_HUD
         static int damage;
         static float enemieskilled;
         static float pointgain;
+        static int Weapon;
+        static string EquippedWeapon;
+        static string HealthStatus;
 
 
 
 
         static void ShowHUD()
         {
+            HPStatus();
             Console.WriteLine("==============");
             Console.WriteLine("Banana Brain Studios Presents: ");
             Console.WriteLine("Monkey Business");
             Console.WriteLine("Score: " + Score);
+            Console.WriteLine("Status: " + HealthStatus);
             Console.WriteLine("Health: " + Health);
             Console.WriteLine("Lives: " + Lives);
             Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
+            Console.WriteLine("Current Weapon: " + EquippedWeapon);
             Console.WriteLine("==============");
 
         }
@@ -58,7 +64,6 @@ namespace _1700_Methods_HUD
         {
             Random rnd = new Random();
 
-            for(int j = 0; j < 1; j++)
             {
                 damage = (rnd.Next(10, 30));
                 Console.WriteLine("==============");
@@ -77,6 +82,9 @@ namespace _1700_Methods_HUD
             if(Health <= 0)
             {
                 Die();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("You Died");
+                Console.ResetColor();
             }
         }
 
@@ -92,7 +100,6 @@ namespace _1700_Methods_HUD
         {
             Random rnd = new Random();
 
-            for (int j = 0; j < 1; j++)
             {
                 enemieskilled = (rnd.Next(1, 3));
                 pointgain = (enemieskilled * enemyKillValue) * ScoreMultiplier;
@@ -100,9 +107,69 @@ namespace _1700_Methods_HUD
 
             Console.WriteLine("==============");
             Console.WriteLine("Enemies Killed: " + enemieskilled);
-            Console.WriteLine("Points Gained: " + (enemieskilled * 50f) * ScoreMultiplier);
+            Console.WriteLine("Points Gained: " + (enemieskilled * enemyKillValue) * ScoreMultiplier);
             Console.WriteLine("==============");
 
+
+        }
+
+        static void ChangeWeapon()
+        {
+            Random rnd = new Random();
+            {
+                Weapon = (rnd.Next(0, 6));
+            }
+            if (Weapon == 0)
+            {
+                EquippedWeapon = "FlingingPoo";
+            }
+            else if (Weapon == 1)
+            {
+                EquippedWeapon = "Stick";
+            }
+            else if (Weapon == 2)
+            {
+                EquippedWeapon = "Rock";
+            }
+            else if (Weapon == 3)
+            {
+                EquippedWeapon = "Vine";
+            }
+            else if (Weapon == 4)
+            {
+                EquippedWeapon = "Fist";
+            }
+            else if (Weapon == 5)
+            {
+                EquippedWeapon = "AK-47";
+            }
+            
+            
+        }
+
+
+        static void HPStatus()
+        {
+            if (Health >= 150)
+            {
+                HealthStatus = "Perfect";
+            }
+            else if (Health > 100)
+            {
+                HealthStatus = "Happy";
+            }
+            else if (Health > 50)
+            {
+                HealthStatus = "Hurt";
+            }
+            else if (Health > 0)
+            {
+                HealthStatus = "Critical";
+            }
+            else if (Health <= 0)
+            {
+                HealthStatus = "Dead";
+            }
 
         }
 
@@ -129,6 +196,7 @@ namespace _1700_Methods_HUD
                 Health = 150;
                 Score = 0.0f;
 
+                ChangeWeapon();
                 ShowHUD();
 
                 Console.ReadKey(true);
@@ -144,16 +212,13 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("--------------");
 
 
-                // damage = ???
-                //TakeDamage(damage);
+
                 Pointsgained();
                 calcDamage();
                 TakeDamage(damage);
                 AddScore(pointgain);
 
-                // pointsGained = ???
-                // scoreMultiplier = ???
-                // AddScore(pointsGained, scoreMultiplier);
+
 
 
                 ShowHUD();
@@ -161,7 +226,7 @@ namespace _1700_Methods_HUD
                 Console.ReadKey(true);
 
                 Console.WriteLine("--------------");
-                Console.WriteLine("You take two hits to the head, you also find one of your bananas");
+                Console.WriteLine("You take two hits, find a new weapon and a Banana");
                 Console.WriteLine("--------------");
 
                 AddBanana();
@@ -171,14 +236,14 @@ namespace _1700_Methods_HUD
                 TakeDamage(damage);
                 Pointsgained();
                 AddScore(pointgain);
-                 // incorrect (only apply to incoming points)
+                ChangeWeapon();
 
                 ShowHUD();
 
                 Console.ReadKey(true);
 
                 Console.WriteLine("--------------");
-                Console.WriteLine("You take one shot to the body and two shots to the head");
+                Console.WriteLine("You take three hits");
                 Console.WriteLine("--------------");
 
                 calcDamage();
@@ -196,12 +261,13 @@ namespace _1700_Methods_HUD
                 Console.ReadKey(true);
 
                 Console.WriteLine("--------------");
-                Console.WriteLine("You find another banana, taking one shot to the head in the process");
+                Console.WriteLine("You find another banana, taking one hit in the process and find a new weapon");
                 Console.WriteLine("--------------");
 
                 AddBanana();
                 calcDamage();
                 TakeDamage(damage);
+                ChangeWeapon();
 
 
                 ShowHUD();
@@ -209,7 +275,7 @@ namespace _1700_Methods_HUD
                 Console.ReadKey(true);
 
                 Console.WriteLine("--------------");
-                Console.WriteLine("You take two shots to the head and one to the body");
+                Console.WriteLine("You take three hits");
                 Console.WriteLine("--------------");
 
                 Pointsgained();
@@ -226,11 +292,12 @@ namespace _1700_Methods_HUD
                 Console.ReadKey(true);
 
                 Console.WriteLine("--------------");
-                Console.WriteLine("You find a monkey biscuit that heals some of your health and find another banana");
+                Console.WriteLine("You find a monkey biscuit that heals some of your health and find another banana. You also find a new weapon");
                 Console.WriteLine("--------------");
 
                 heal(healHealth);
                 AddBanana();
+                ChangeWeapon();
                 
 
                 ShowHUD();
@@ -238,7 +305,7 @@ namespace _1700_Methods_HUD
                 Console.ReadKey(true);
 
                 Console.WriteLine("--------------");
-                Console.WriteLine("You take two shots");
+                Console.WriteLine("You take two shots and find a new weapon");
                 Console.WriteLine("--------------");
                 
                 calcDamage();
@@ -247,6 +314,7 @@ namespace _1700_Methods_HUD
                 TakeDamage(damage);
                 Pointsgained();
                 AddScore(pointgain);
+                ChangeWeapon();
                 
 
                 ShowHUD();
