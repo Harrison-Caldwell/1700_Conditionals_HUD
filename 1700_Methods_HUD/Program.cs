@@ -91,6 +91,10 @@ namespace _1700_Methods_HUD
         static void heal(int healHealth)
         {
             Health = Health + healHealth;
+            if (Health >= baseHealth)
+            {
+                Health = baseHealth;
+            }
         }
 
         
