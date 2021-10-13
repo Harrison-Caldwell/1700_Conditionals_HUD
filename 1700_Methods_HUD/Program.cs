@@ -5,7 +5,7 @@ namespace _1700_Methods_HUD
     class Program
     {
         static float Score;
-        static int Health;
+        static float Health;
         static int Lives;
         static float ScoreMultiplier;
         static string firstName;
@@ -15,12 +15,14 @@ namespace _1700_Methods_HUD
         static int healHealth;
         static float Banana;
         static int baseHealth;
-        static int damage;
+        static float damage;
         static float enemieskilled;
         static float pointgain;
         static int Weapon;
         static string EquippedWeapon;
         static string HealthStatus;
+        static float Shields;
+        static float Spillover;
 
 
 
@@ -33,6 +35,7 @@ namespace _1700_Methods_HUD
             Console.WriteLine("Monkey Business");
             Console.WriteLine("Score: " + Score);
             Console.WriteLine("Status: " + HealthStatus);
+            Console.WriteLine("Shields: " + Shields);
             Console.WriteLine("Health: " + Health);
             Console.WriteLine("Lives: " + Lives);
             Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
@@ -75,10 +78,14 @@ namespace _1700_Methods_HUD
             
         }
 
-        static void TakeDamage(int damage)
+        static void TakeDamage(float damage)
         {
+            Shields = Shields - damage;
+                if (Shields < damage)
+            {
+                Health = Health - ();
+            }
             
-            Health = Health - damage;
             if(Health <= 0)
             {
                 Die();
@@ -176,10 +183,7 @@ namespace _1700_Methods_HUD
             {
                 HealthStatus = "Critical";
             }
-            else if (Health <= 0)
-            {
-                HealthStatus = "Dead";
-            }
+
 
         }
 
@@ -205,6 +209,7 @@ namespace _1700_Methods_HUD
                 Lives = 5;
                 Health = 150;
                 Score = 0.0f;
+                Shields = 100f;
 
                 ChangeWeapon(5);
                 ShowHUD();
