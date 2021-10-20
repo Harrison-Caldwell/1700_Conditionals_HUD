@@ -22,7 +22,8 @@ namespace _1700_Methods_HUD
         static string EquippedWeapon;
         static string HealthStatus;
         static float Shields;
-        static float Spillover;
+        static int Regen;
+        
 
 
 
@@ -80,11 +81,26 @@ namespace _1700_Methods_HUD
 
         static void TakeDamage(float damage)
         {
-            Shields = Shields - damage;
-                if (Shields < damage)
+            
+            void TakeShieldDamage()
             {
-                Health = Health - ();
+
+                if (Shields > 0)
+                {
+                    Shields = Shields - damage;
+
+                    if (Shields < damage)
+                    {
+                        Health = (Shields - damage) + Health;
+                    }
+                    if (Shields <= 0)
+                    {
+                        Shields = 0;
+                    }
+                }
+
             }
+            
             
             if(Health <= 0)
             {
@@ -93,6 +109,13 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You Died");
                 Console.ResetColor();
             }
+
+            damage = 0;
+        }
+
+        static void Spillover()
+        {
+            Health = Shields - damage + baseHealth;
         }
 
         static void heal(int healHealth)
@@ -101,6 +124,16 @@ namespace _1700_Methods_HUD
             if (Health >= baseHealth)
             {
                 Health = baseHealth;
+            }
+        }
+
+        static void ShieldRegen(int Regen)
+        {
+            Regen = 10;
+            Shields = Shields + Regen;
+            if (Shields >= 100)
+            {
+                Shields = 100;
             }
         }
 
@@ -211,7 +244,7 @@ namespace _1700_Methods_HUD
                 Score = 0.0f;
                 Shields = 100f;
 
-                ChangeWeapon(5);
+                ChangeWeapon(Weapon);
                 ShowHUD();
 
                 Console.ReadKey(true);
@@ -228,10 +261,12 @@ namespace _1700_Methods_HUD
 
 
 
+                //ShieldRegen(Regen);
                 Pointsgained();
                 calcDamage();
                 TakeDamage(damage);
                 AddScore(pointgain);
+                
 
 
 
@@ -244,14 +279,20 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You take two hits, find a new weapon and a Banana");
                 Console.WriteLine("--------------");
 
+                //ShieldRegen(Regen);
                 AddBanana();
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
+
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
+
                 Pointsgained();
                 AddScore(pointgain);
                 ChangeWeapon(Weapon);
+                
 
                 ShowHUD();
 
@@ -261,12 +302,19 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You take three hits");
                 Console.WriteLine("--------------");
 
+                //ShieldRegen(Regen);
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
+
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
+
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
+
                 Pointsgained();
                 AddScore(pointgain);
 
@@ -279,9 +327,12 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You find another banana, taking one hit in the process and find a new weapon");
                 Console.WriteLine("--------------");
 
+                //ShieldRegen(Regen);
                 AddBanana();
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
+
                 ChangeWeapon(Weapon);
 
 
@@ -293,13 +344,17 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You take three hits");
                 Console.WriteLine("--------------");
 
+                //ShieldRegen(Regen);
                 Pointsgained();
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
                 calcDamage();
                 TakeDamage(damage);
+
                 AddScore(pointgain);
 
                 ShowHUD();
@@ -310,6 +365,7 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You find a monkey biscuit that heals some of your health and find another banana. You also find a new weapon");
                 Console.WriteLine("--------------");
 
+                //ShieldRegen(Regen);
                 heal(healHealth);
                 AddBanana();
                 ChangeWeapon(Weapon);
@@ -322,11 +378,14 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("--------------");
                 Console.WriteLine("You take two shots and find a new weapon");
                 Console.WriteLine("--------------");
-                
+
+                //ShieldRegen(Regen);
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
                 calcDamage();
                 TakeDamage(damage);
+                ShowHUD();
                 Pointsgained();
                 AddScore(pointgain);
                 ChangeWeapon(Weapon);
@@ -340,6 +399,7 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You find your last 2 Bananas");
                 Console.WriteLine("--------------");
 
+                //ShieldRegen(Regen);
                 AddBanana();
                 AddBanana();
 
