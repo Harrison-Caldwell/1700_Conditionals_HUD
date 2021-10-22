@@ -36,6 +36,7 @@ namespace _1700_Methods_HUD
             Console.WriteLine("Monkey Business");
             Console.WriteLine("Score: " + Score);
             Console.WriteLine("Status: " + HealthStatus);
+            Console.WriteLine("You Regen " + Regen + " Shields");
             Console.WriteLine("Shields: " + Shields);
             Console.WriteLine("Health: " + Health);
             Console.WriteLine("Lives: " + Lives);
@@ -81,41 +82,51 @@ namespace _1700_Methods_HUD
 
         static void TakeDamage(float damage)
         {
-            
-            void TakeShieldDamage()
+            if (Shields > 0)
             {
-
-                if (Shields > 0)
-                {
-                    Shields = Shields - damage;
-
-                    if (Shields < damage)
-                    {
-                        Health = (Shields - damage) + Health;
-                    }
-                    if (Shields <= 0)
-                    {
-                        Shields = 0;
-                    }
-                }
-
+                TakeShieldDamage(damage);
             }
-            
-            
-            if(Health <= 0)
+            else if (Shields <= 0)
+            {
+                TakeHealthDamage(damage);
+            }
+
+        }
+
+        static void TakeShieldDamage(float damage)
+        {
+            Shields = Shields - damage;
+            Spillover(damage);
+        }
+
+        static void TakeHealthDamage(float damage)
+        {
+            Health = Health - damage;
+            if (Health <= 0)
             {
                 Die();
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("You Died");
                 Console.ResetColor();
+                if (Lives <= 0)
+                {
+                    Lives = 0;
+                    Console.WriteLine("GAME OVER!!!");
+                }
             }
-
-            damage = 0;
         }
 
-        static void Spillover()
+        static void Spillover(float damage)
         {
-            Health = Shields - damage + baseHealth;
+            if (Shields < 0)
+            {
+                Health = Health + Shields;
+            }
+            if (Shields <= 0)
+            {
+                Shields = 0;
+            }
+
         }
 
         static void heal(int healHealth)
@@ -243,6 +254,7 @@ namespace _1700_Methods_HUD
                 Health = 150;
                 Score = 0.0f;
                 Shields = 100f;
+                Regen = 10;
 
                 ChangeWeapon(Weapon);
                 ShowHUD();
@@ -261,7 +273,7 @@ namespace _1700_Methods_HUD
 
 
 
-                //ShieldRegen(Regen);
+                ShieldRegen(Regen);
                 Pointsgained();
                 calcDamage();
                 TakeDamage(damage);
@@ -279,15 +291,13 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You take two hits, find a new weapon and a Banana");
                 Console.WriteLine("--------------");
 
-                //ShieldRegen(Regen);
+                ShieldRegen(Regen);
                 AddBanana();
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
 
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
 
                 Pointsgained();
                 AddScore(pointgain);
@@ -302,18 +312,15 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You take three hits");
                 Console.WriteLine("--------------");
 
-                //ShieldRegen(Regen);
+                ShieldRegen(Regen);
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
 
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
 
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
 
                 Pointsgained();
                 AddScore(pointgain);
@@ -327,11 +334,10 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You find another banana, taking one hit in the process and find a new weapon");
                 Console.WriteLine("--------------");
 
-                //ShieldRegen(Regen);
+                ShieldRegen(Regen);
                 AddBanana();
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
 
                 ChangeWeapon(Weapon);
 
@@ -344,14 +350,12 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You take three hits");
                 Console.WriteLine("--------------");
 
-                //ShieldRegen(Regen);
+                ShieldRegen(Regen);
                 Pointsgained();
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
                 calcDamage();
                 TakeDamage(damage);
 
@@ -365,7 +369,7 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You find a monkey biscuit that heals some of your health and find another banana. You also find a new weapon");
                 Console.WriteLine("--------------");
 
-                //ShieldRegen(Regen);
+                ShieldRegen(Regen);
                 heal(healHealth);
                 AddBanana();
                 ChangeWeapon(Weapon);
@@ -379,13 +383,11 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You take two shots and find a new weapon");
                 Console.WriteLine("--------------");
 
-                //ShieldRegen(Regen);
+                ShieldRegen(Regen);
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
                 calcDamage();
                 TakeDamage(damage);
-                ShowHUD();
                 Pointsgained();
                 AddScore(pointgain);
                 ChangeWeapon(Weapon);
@@ -399,7 +401,7 @@ namespace _1700_Methods_HUD
                 Console.WriteLine("You find your last 2 Bananas");
                 Console.WriteLine("--------------");
 
-                //ShieldRegen(Regen);
+                ShieldRegen(Regen);
                 AddBanana();
                 AddBanana();
 
