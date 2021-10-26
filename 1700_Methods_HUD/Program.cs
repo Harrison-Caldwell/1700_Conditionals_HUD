@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace _1700_Methods_HUD
 {
@@ -23,6 +24,10 @@ namespace _1700_Methods_HUD
         static string HealthStatus;
         static float Shields;
         static int Regen;
+        static int baseShields;
+        static int StartLives;
+        static float playerLevel;
+        static int XP;
         
 
 
@@ -40,6 +45,8 @@ namespace _1700_Methods_HUD
             Console.WriteLine("Shields: " + Shields);
             Console.WriteLine("Health: " + Health);
             Console.WriteLine("Lives: " + Lives);
+            Console.WriteLine("XP: " + XP);
+            Console.WriteLine("Level: " + playerLevel);
             Console.WriteLine("Score Multiplier: " + ScoreMultiplier);
             Console.WriteLine("Current Weapon: " + EquippedWeapon);
             Console.WriteLine("==============");
@@ -82,6 +89,11 @@ namespace _1700_Methods_HUD
 
         static void TakeDamage(float damage)
         {
+            if (damage < 0)
+            {
+                damage = 0;
+            }
+
             if (Shields > 0)
             {
                 TakeShieldDamage(damage);
@@ -90,6 +102,19 @@ namespace _1700_Methods_HUD
             {
                 TakeHealthDamage(damage);
             }
+            if (damage < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("ERROR! NEGATIVE DAMAGE!");
+                Console.ResetColor();
+            }
+            if (Health < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("ERROR! NEGATIVE HP!");
+                Console.ResetColor();
+            }
+
 
         }
 
@@ -97,6 +122,18 @@ namespace _1700_Methods_HUD
         {
             Shields = Shields - damage;
             Spillover(damage);
+            if (Shields <= 0)
+            {
+                Shields = 0;
+            }
+
+            if (Shields < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("ERROR! NEGATIVE SHIELDS!");
+                Console.ResetColor();
+            }
+            
         }
 
         static void TakeHealthDamage(float damage)
@@ -113,7 +150,10 @@ namespace _1700_Methods_HUD
                     Lives = 0;
                     Console.WriteLine("GAME OVER!!!");
                 }
+                Debug.Assert(Health > 0);
+                Debug.Assert(Lives >= 0);
             }
+            
         }
 
         static void Spillover(float damage)
@@ -136,18 +176,40 @@ namespace _1700_Methods_HUD
             {
                 Health = baseHealth;
             }
+            if (Health > baseHealth)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("ERROR! HEALTH GREATER THEN MAX HP!");
+                Console.ResetColor();
+            }
+            
         }
 
         static void ShieldRegen(int Regen)
         {
-            Regen = 10;
             Shields = Shields + Regen;
             if (Shields >= 100)
             {
                 Shields = 100;
             }
+            if (Shields > 100)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("ERROR! NEGATIVE SHIELDS!!");
+                Console.ResetColor();
+            }
+           
+
         }
 
+        static void ResetPlayer()
+        {
+            Health = baseHealth;
+            Shields = baseShields;
+            Lives = StartLives;
+            Score = 0;
+            ScoreMultiplier = 1f;
+        }
         
         
         
@@ -164,8 +226,22 @@ namespace _1700_Methods_HUD
             Console.WriteLine("Enemies Killed: " + enemieskilled);
             Console.WriteLine("Points Gained: " + (enemieskilled * enemyKillValue) * ScoreMultiplier);
             Console.WriteLine("==============");
+        }
 
+        static void XPGain(int XP)
+        {
+            int XPValue = 25;
+            XP = XP + (XPValue * (int) enemieskilled);
+            if (XP == 100)
+            {
+                playerLevel = playerLevel + 1;
+                XP = 0;
+            }
 
+            if (XP < 0)
+            {
+                XP = 0;
+            }
         }
 
         static void SelectWeapon()
@@ -231,6 +307,41 @@ namespace _1700_Methods_HUD
 
         }
 
+        static void UnitTest()
+        {
+            Console.WriteLine("Unit Testing: ");
+            Console.WriteLine();
+            Console.WriteLine("Testing TakeDamage() applies to shield first by taking 30 damage");
+            TakeDamage(30);
+            Debug.Assert(Health == baseHealth);
+            Console.WriteLine();
+            Console.WriteLine("Testing TakeDamage() will not accept a negative value by taking -20 damage");
+            TakeDamage(-20);
+            Debug.Assert(damage >= 0);
+            Console.WriteLine();
+            Console.WriteLine("Testing Spillover() applies to health properly by taking 100 damage");
+            TakeDamage(100);
+            Debug.Assert(Shields == 0);
+            Console.WriteLine();
+            Console.WriteLine("Testing healHealth() respects Health <= 150 by healing 40 HP");
+            heal(40);
+            Debug.Assert(Health <= baseHealth);
+            Console.WriteLine();
+            Console.WriteLine("Testing ShieldRegen() respects Shield <= 100 by Regen 110 shields");
+            ShieldRegen(110);
+            Debug.Assert(Shields <= baseShields);
+            Console.WriteLine();
+            Console.WriteLine("Testing XPGain() will not add negatvie XP by setting XP to -25");
+            XPGain(-25);
+            Debug.Assert(XP >= 0);
+            Console.WriteLine("Reset Player stats for gameplay");
+            ResetPlayer();
+            Console.WriteLine();
+            Console.ReadKey(true);
+
+
+        }
+
 
       
 
@@ -243,6 +354,7 @@ namespace _1700_Methods_HUD
                
                 
                 baseHealth = 150;
+                baseShields = 100;
                 Banana = 0.75f;
                 healHealth = 25;
                 enemyKillValue = 50.0f;
@@ -251,11 +363,17 @@ namespace _1700_Methods_HUD
                 fullName = firstName + " " + lastName;
                 ScoreMultiplier = 1.0f;
                 Lives = 5;
+                StartLives = 5;
                 Health = 150;
                 Score = 0.0f;
                 Shields = 100f;
                 Regen = 10;
+                playerLevel = 1;
 
+
+
+                UnitTest();
+                
                 ChangeWeapon(Weapon);
                 ShowHUD();
 
@@ -278,6 +396,7 @@ namespace _1700_Methods_HUD
                 calcDamage();
                 TakeDamage(damage);
                 AddScore(pointgain);
+                XPGain(XP);
                 
 
 
@@ -301,6 +420,7 @@ namespace _1700_Methods_HUD
 
                 Pointsgained();
                 AddScore(pointgain);
+                XPGain(XP);
                 ChangeWeapon(Weapon);
                 
 
@@ -324,6 +444,7 @@ namespace _1700_Methods_HUD
 
                 Pointsgained();
                 AddScore(pointgain);
+                XPGain(XP);
 
 
                 ShowHUD();
@@ -338,6 +459,7 @@ namespace _1700_Methods_HUD
                 AddBanana();
                 calcDamage();
                 TakeDamage(damage);
+                XPGain(XP);
 
                 ChangeWeapon(Weapon);
 
@@ -360,6 +482,7 @@ namespace _1700_Methods_HUD
                 TakeDamage(damage);
 
                 AddScore(pointgain);
+                XPGain(XP);
 
                 ShowHUD();
 
@@ -390,6 +513,7 @@ namespace _1700_Methods_HUD
                 TakeDamage(damage);
                 Pointsgained();
                 AddScore(pointgain);
+                XPGain(XP);
                 ChangeWeapon(Weapon);
                 
 
